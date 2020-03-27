@@ -281,7 +281,7 @@
 修改状态：提交 mutation 修改状态 - 必须
    actions中提交mutation再去修改状态值 - 官方建议
    使用dispatch来提交actions
-![vuex](../images/vuex.png)
+![vuex](~@img/vuex.png)
 
 学习地址：https://baijiahao.baidu.com/s?id=1618794879569468435&wfr=spider&for=pc
 
@@ -427,4 +427,4 @@ diff算法的过程中,先会进行新旧节点的首尾交叉对比,当无法�
 
 当改变属性值时,会触发对应的属性的set方法,由于之前执行render的时候触发了get,收集了对应的Watcher,所以改变值时触发set,通知之前收集的Watcher实例执行,重新计算render方法进行patch操作
 
-<img src='../images/vue.jpg'>
+<img src='~@img/vue.jpg'>
