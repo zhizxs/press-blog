@@ -1,0 +1,64 @@
+# 微信小程序面试相关
+
+## 原生开发、mpvue?
+- 如果是新项目，且没有旧的 h5 项目迁移，则考虑用小程序原生开发，好处是相比于第三方框架，坑少
+- 如果有 老的 h5 项目是 vue 开发 或者 也有 h5 项目也需要小程序开发，则比较适合 wepy 或者 mpvue 来做迁移或者开发，近期看wepy几乎不更新了，所以推荐美团的mpvue。
+- **目前比较流行的是 uni-app 。通过条件编译能够实现跨平台使用，兼容各家小程序。**
+
+
+## 微信小程序原理？
+
+- 本质是单页面程序，页面的渲染和事件处理都在同一个页面进行，但是又可以通过微信客户端调用原生接口；
+- 数据驱动的架构模式，它的UI和数据是分离的，所有的页面更新都需要通过对数据的更改来实现；
+- 功能可分为webview和appService两个部分；webview用来展现UI，appService有来处理业务逻辑、数据及接口调用；
+- 两个部分在两个进程中运行，通过系统层JSBridge实现通信，实现UI的渲染、事件的处理等
+
+## 小程序的什么周期？
+
+- onLoad() 页面加载时触发，只会调用一次，可获取当前页面路径中的参数。
+- onShow() 页面显示/切入前台时触发，一般用来发送数据请求；
+- onReady() 页面初次渲染完成时触发, 只会调用一次，代表页面已可和视图层进行交互。
+- onHide() 页面隐藏/切入后台时触发, 如底部 tab 切换到其他页面或小程序切入后台等。
+- onUnload() 页面卸载时触发，如redirectTo或navigateBack到其他页面时。
+
+## 小程序的双向绑定和vue的区别？
+
+大体相同，但小程序直接this.data的属性是不可以同步到视图的，必须调用this.setData()方法！
+
+## 小程序页面间传递数据的方法？
+
+- 使用全局变量实现数据传递
+- 页面跳转或重定向时，使用url带参数传递数据
+- 使用组件模板 template传递参数
+- 使用缓存传递参数
+- 使用数据库传递数据
+
+## 封装小程序的数据请求？
+
+- 在根目录下创建utils目录及api.js文件和apiConfig.js文件；
+- 在apiConfig.js 封装基础的get, post 和 put， upload等请求方法，设置请求体，带上token和异常处理等；
+- 在api中引入apiConfig.js封装好的请求方法，根据页面数据请求的urls, 设置对应的方法并导出；
+- 在具体的页面中导入
+
+## wxss与css?
+
+- 都是用来描述页面的样式；
+- WXSS 具有 CSS 大部分的特性，也做了一些扩充和修改；
+- WXSS新增了尺寸单位，WXSS 在底层支持新的尺寸单位 rpx；
+- WXSS 仅支持部分 CSS 选择器；
+- WXSS 提供全局样式与局部样式
+
+## 微信小程序的目录和文件作用？
+
+- project.config.json 项目配置文件，用得最多的就是配置是否开启https校验；
+- App.js 设置一些全局的基础数据等；
+- App.json 底部tab, 标题栏和路由等设置；
+- App.wxss 公共样式，引入iconfont等；
+- pages 里面包含一个个具体的页面；
+- index.json (配置当前页面标题和引入组件等)；
+- index.wxml (页面结构)；
+- index.wxss (页面样式表)；
+- index.js (页面的逻辑，请求和数据处理等)；
+
+
+> 小程序学习：https://www.jianshu.com/p/1221fd588311?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation

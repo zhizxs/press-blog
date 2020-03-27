@@ -1,0 +1,373 @@
+## 数组乱序
+
+sort + Math.random()-0.5
+
+## 函数柯里化
+
+#### 什么是？
+
+柯里化是一种将使用多个参数的一个函数转换成一系列使用一个参数的函数的技术。
+
+举例来说，一个接收3个参数的普通函数，在进行柯里化后， 柯里化版本的函数接收一个参数并返回接收下一个参数的函数， 该函数返回一个接收第三个参数的函数。 最后一个函数在接收第三个参数后， 将之前接收到的三个参数应用于原普通函数中，并返回最终结果。
+
+```js
+//普通函数
+function fn(a,b,c,d,e) {
+  console.log(a,b,c,d,e)
+}
+//生成的柯里化函数
+let _fn = curry(fn);
+
+_fn(1,2,3,4,5);     // print: 1,2,3,4,5
+_fn(1)(2)(3,4,5);   // print: 1,2,3,4,5
+_fn(1,2)(3,4)(5);   // print: 1,2,3,4,5
+_fn(1)(2)(3)(4)(5); // print: 1,2,3,4,5
+
+// 当接收的参数数量与原函数的形参数量相同时，执行原函数； 当接收的参数数量小于原函数的形参数量时，返回一个函数用于接收剩余的参数，直至接收的参数数量与形参数量一致，执行原函数。
+```
+
+#### 用途？
+
+- 参数复用
+- 增加可读性
+
+
+
+
+
+## 前端路由
+
+#### 单页面
+
+SPA 就是一个WEB项目只有一个 HTML 页面，一旦页面加载完成，SPA 不会因为用户的操作而进行页面的重新加载或跳转。 取而代之的是利用 JS 动态的变换 HTML 的内容，从而来模拟多个视图间跳转。
+
+在 SPA 的应用设计中，一个应用只有一个HTML文件，在HTML文件中包含一个占位符（即图中的 container），占位符对应的内容由每个视图来决定，对于 SPA 来说，页面的切换就是视图之间的切换。
+
+#### 由来
+
+ajax的出现，带来了单页面应用的出现。spa提升web应用的交互体验，在交互过程中不需要重新刷新页面，获取数据也是通过ajax异步，页面显示流畅。
+
+问题：（js改变内容实现交互，页面url不变）
+
+1. spa无法记住用户操作记录
+
+2. 只有一个URL，seo不友好
+
+#### 前端路由
+
+——为了解决上面问题
+
+1. 保证一个html页面，每个视图展示形式匹配一个特殊的 url；
+2. 不刷新切换视图
+
+
+
+#### hash模式
+
+> 由于 hash 值的变化不会导致浏览器像服务器发送请求，而且 hash 的改变会触发 hashchange 事件，浏览器的前进后退也能对其进行控制，所以在 H5 的 history 模式出现之前，基本都是使用 hash 模式来实现前端路由。
+
+```js
+window.location.hash = 'hash字符串'; // 用于设置 hash 值
+
+let hash = window.location.hash; // 获取当前 hash 值
+
+// 监听hash变化，点击浏览器的前进后退会触发
+window.addEventListener('hashchange', function(event){ 
+    let newURL = event.newURL; // hash 改变后的新 url
+    let oldURL = event.oldURL; // hash 改变前的旧 url
+},false)
+
+```
+
+
+
+**实现路由对象**
+
+注意：
+
+1. 注意不存在hash值时候的处理，可以默认首页
+2. 对未在路由中注册的hash值处理 —— 注册一个方法
+3. hash值对应的回掉函数在执行过程中抛出异常 —— 增加try/catch,增加错误处理方法
+
+```js
+class HashRouter{
+    constructor(){
+        //用于存储不同hash值对应的回调函数
+        this.routers = {};
+        window.addEventListener('hashchange',this.load.bind(this),false)
+    }
+    //用于注册每个视图
+    register(hash,callback = function(){}){
+        this.routers[hash] = callback;
+    }
+    //用于注册首页
+    registerIndex(callback = function(){}){
+        this.routers['index'] = callback;
+    }
+    //用于处理视图未找到的情况
+    registerNotFound(callback = function(){}){
+        this.routers['404'] = callback;
+    }
+    //用于处理异常情况
+    registerError(callback = function(){}){
+        this.routers['error'] = callback;
+    }
+    //用于调用不同视图的回调函数
+    load(){
+        let hash = location.hash.slice(1),
+            handler;
+        //没有hash 默认为首页
+        if(!hash){
+            handler = this.routers.index;
+        }
+        //未找到对应hash值
+        else if(!this.routers.hasOwnProperty(hash)){
+            handler = this.routers['404'] || function(){};
+        }
+        else{
+            handler = this.routers[hash]
+        }
+        //执行注册的回调函数
+        try{
+            handler.apply(this);
+        }catch(e){
+            console.error(e);
+            (this.routers['error'] || function(){}).call(this,e);
+        }
+    }
+}
+
+
+// *************************** 使用 ***************************
+let router = new HashRouter();
+let container = document.getElementById('container');
+
+//注册首页回调函数
+router.registerIndex(()=> container.innerHTML = '我是首页');
+
+//注册其他视图回到函数
+router.register('/page1',()=> container.innerHTML = '我是page1');
+router.register('/page2',()=> container.innerHTML = '我是page2');
+router.register('/page3',()=> container.innerHTML = '我是page3');
+router.register('/page4',()=> {throw new Error('抛出一个异常')});
+
+//加载视图
+router.load();
+//注册未找到对应hash值时的回调
+router.registerNotFound(()=>container.innerHTML = '页面未找到');
+//注册出现异常时的回调
+router.registerError((e)=>container.innerHTML = '页面异常，错误消息：<br>' + e.message);
+
+```
+
+#### history 模式
+
+**在 HTML5 之前，浏览器就已经有了 history 对象**
+
+```js
+// 早期
+history.go(-1);       // 后退一页
+history.go(2);        // 前进两页
+history.forward();     // 前进一页
+history.back();      // 后退一页
+// 新增
+history.pushState();         // 添加新的状态到历史状态栈
+history.replaceState();      // 用新的状态代替当前状态
+history.state                // 返回当前状态对象
+
+```
+
+> HTML5引入了 history.pushState() 和 history.replaceState() 方法，它们分别可以添加和修改历史记录条目。这些方法通常与window.onpopstate 配合使用。
+
+history.pushState() 和 history.replaceState() 均接收三个参数（state, title, url）
+
+1. state：合法的 Javascript 对象，可以用在 popstate 事件中
+2. title：现在大多浏览器忽略这个参数，可以直接用 null 代替
+3. url：任意有效的 URL，用于更新浏览器的地址栏
+
+history.pushState() 和 history.replaceState() 的区别在于：
+
+- history.pushState() 在保留现有历史记录的同时，将 url 加入到历史记录中。
+- history.replaceState() 会将历史记录中的当前页面历史替换为 url。
+
+##### **思路已经有了，接下来我们来实现一个路由对象**
+
+1. 创建一个路由对象, 实现 register 方法用于注册每个 location.pathname 值对应的回调函数
+
+2. 当 location.pathname === '/' 时，认为是首页，所以实现 registerIndex 方法用于注册首页时的回调函数
+
+3. 解决 location.path 没有对应的匹配，增加方法 registerNotFound 用于注册默认回调函数
+
+4. 解决注册的回到函数执行时出现异常，增加方法 registerError 用于处理异常情况
+5. 定义 assign 方法，用于通过 JS 触发 history.pushState 函数
+6. 定义 replace 方法，用于通过 JS 触发 history.replaceState 函数
+7. 监听 popstate 用于处理前进后退时调用对应的回调函数
+8. 全局阻止A链接的默认事件，获取A链接的href属性，并调用 history.pushState 方法
+9. 定义 load 方法，用于首次进入页面时 根据 location.pathname 调用对应的回调函数
+
+```js
+class HistoryRouter{
+    constructor(){
+        //用于存储不同path值对应的回调函数
+        this.routers = {};
+        this.listenPopState();
+        this.listenLink();
+    }
+    //监听popstate
+    listenPopState(){
+        window.addEventListener('popstate',(e)=>{
+            let state = e.state || {},
+                path = state.path || '';
+            this.dealPathHandler(path)
+        },false)
+    }
+    //全局监听A链接
+    listenLink(){
+        window.addEventListener('click',(e)=>{
+            let dom = e.target;
+            if(dom.tagName.toUpperCase() === 'A' && dom.getAttribute('href')){
+                e.preventDefault()
+                this.assign(dom.getAttribute('href'));
+            }
+        },false)
+    }
+    //用于首次进入页面时调用
+    load(){
+        let path = location.pathname;
+        this.dealPathHandler(path)
+    }
+    //用于注册每个视图
+    register(path,callback = function(){}){
+        this.routers[path] = callback;
+    }
+    //用于注册首页
+    registerIndex(callback = function(){}){
+        this.routers['/'] = callback;
+    }
+    //用于处理视图未找到的情况
+    registerNotFound(callback = function(){}){
+        this.routers['404'] = callback;
+    }
+    //用于处理异常情况
+    registerError(callback = function(){}){
+        this.routers['error'] = callback;
+    }
+    //跳转到path
+    assign(path){
+        history.pushState({path},null,path);
+        this.dealPathHandler(path)
+    }
+    //替换为path
+    replace(path){
+        history.replaceState({path},null,path);
+        this.dealPathHandler(path)
+    }
+    //通用处理 path 调用回调函数
+    dealPathHandler(path){
+        let handler;
+        //没有对应path
+        if(!this.routers.hasOwnProperty(path)){
+            handler = this.routers['404'] || function(){};
+        }
+        //有对应path
+        else{
+            handler = this.routers[path];
+        }
+        try{
+            handler.call(this)
+        }catch(e){
+            console.error(e);
+            (this.routers['error'] || function(){}).call(this,e);
+        }
+    }
+}
+
+// ********************* 调用 *********************
+let router = new HistoryRouter();
+let container = document.getElementById('container');
+
+//注册首页回调函数
+router.registerIndex(() => container.innerHTML = '我是首页');
+
+//注册其他视图回到函数
+router.register('/page1', () => container.innerHTML = '我是page1');
+router.register('/page2', () => container.innerHTML = '我是page2');
+router.register('/page3', () => container.innerHTML = '我是page3');
+router.register('/page4', () => {
+    throw new Error('抛出一个异常')
+});
+
+document.getElementById('btn').onclick = () => router.assign('/page2')
+
+
+//注册未找到对应path值时的回调
+router.registerNotFound(() => container.innerHTML = '页面未找到');
+//注册出现异常时的回调
+router.registerError((e) => container.innerHTML = '页面异常，错误消息：<br>' + e.message);
+//加载页面
+router.load();
+
+```
+
+##### 抉择
+
+hash 模式相比于 history 模式的优点：
+
+- 兼容性更好，可以兼容到IE8
+- 无需服务端配合处理非单页的url地址
+
+hash 模式相比于 history 模式的缺点：
+
+- 看起来更丑。
+- 会导致锚点功能失效。
+- 相同 hash 值不会触发动作将记录加入到历史栈中，而 pushState 则可以。
+
+综上所述，当我们不需要兼容老版本IE浏览器，并且可以控制服务端覆盖所有情况的候选资源时，我们可以愉快的使用 history 模式了。
+
+
+
+
+
+## 处理图片异常
+
+1. 监听图片的 error
+
+   ```js
+   let img = document.getElementById('img');
+   img.addEventListener('error',function(e){
+       e.target.src = '//xxx.xxx.xxx/default.png'; // 为当前图片设定默认图
+   })
+   
+   // huozhe 
+   
+   <img src="//xxx.xxx.xxx/img.png" onerror="this.src = '//xxx.xxx.xxx/default.png'">
+     
+    // 问题：
+    // 需要手动的向 img 标签中添加内联事件，在实际开发过程中，很难保证每张图片都不漏写
+   ```
+
+2. 全局监听
+
+> 对于 img 的 error 事件来说，是无法冒泡的，但是是可以捕获的。
+>
+> 当网络出现异常的时候，必然会出现什么网络图片都无法加载的情况，这样就会导致我们监听的 error 事件 被无限触发，所以我们可以设定一个计数器，当达到期望的错误次数时停止对图片赋予默认图片的操作，改为提供一个Base64的图片
+
+```js
+window.addEventListener('error',function(e){
+    let target = e.target, // 当前dom节点
+        tagName = target.tagName,
+        times = Number(target.dataset.times) || 0, // 以失败的次数，默认为0
+        allTimes = 3; // 总失败次数，此时设定为3
+    // 当前异常是由图片加载异常引起的
+    if( tagName.toUpperCase() === 'IMG' ){
+        if(times >= allTimes){
+            target.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+        }else{
+            target.dataset.times = times + 1;
+            target.src = '//xxx.xxx.xxx/default.jpg';
+        }
+    }
+},true)
+
+```
+
