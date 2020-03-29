@@ -1,7 +1,7 @@
 const sidebar = require("./common/sidebar")
 module.exports = {
-  title: "zhiz blog",
-  description: "sum up in project",
+  title: "zhiz",
+  description: "有记录，才有发生！有出发，才有到达！",
   // base: "/test/",
   configureWebpack: {
     resolve: {
@@ -11,6 +11,7 @@ module.exports = {
     }
   },
   themeConfig: {
+    // logo: "./assets/img/logo.jpg",
     // sidebar: "auto",
     sidebarDepth: 2,
     nav: [
