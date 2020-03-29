@@ -1,3 +1,4 @@
+const sidebar = require("./common/sidebar")
 module.exports = {
   title: "zhiz blog",
   description: "sum up in project",
@@ -10,53 +11,67 @@ module.exports = {
     }
   },
   themeConfig: {
-    sidebar: "auto",
+    // sidebar: "auto",
+    sidebarDepth: 2,
     nav: [
+      { text: "HOME", link: "/" },
       {
-        text: "Front-end",
+        text: "能走多远",
         items: [
           {
-            text: "Html&Css",
-            link: "/Front-end/Html&Css/"
+            text: "前端日常",
+            link: "/Front-end/Base/"
           },
           {
-            text: "Javascript",
-            link: "/Front-end/Javascript/"
-          },
-          {
-            text: "Frame",
+            text: "VUE走起",
             link: "/Front-end/Frame/"
           },
           {
-            text: "Mobile",
+            text: "假的移动端",
             link: "/Front-end/Mobile/"
           },
           {
-            text: "Advance",
-            link: "/Front-end/Advance/"
+            text: "项目相随",
+            link: "/Front-end/Project-Sum/"
+          },
+          {
+            text: "发散一下",
+            link: "/Front-end/Others/"
+          },
+          {
+            text: "碎片时间",
+            link: "/Front-end/Tips/"
+          },
+          {
+            text: "工具收藏",
+            link: "/Front-end/Tools/"
           }
         ]
       },
       {
-        text: "Network",
-        link: "/Network/"
+        text: "平凡之路",
+        items: [
+          {
+            text: "学习中",
+            link: "/OnTheWay/BookNotes/"
+          },
+          {
+            text: "行走中",
+            link: "/OnTheWay/Travels/"
+          },
+          {
+            text: "思考中",
+            link: "/OnTheWay/Articles/"
+          }
+        ]
       },
       {
-        text: "Project-sum",
-        link: "/Project-sum/"
-      },
-      {
-        text: "Tips",
-        link: "/Tips/"
-      },
-      {
-        text: "Tools",
-        link: "/Tools/"
-      },
-      {
-        text: "Others",
-        link: "/Others/"
+        text: "什么玩意",
+        link: "..."
       }
-    ]
+    ],
+    sidebar: {
+      ...sidebar
+    }
   }
 }

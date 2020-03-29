@@ -120,7 +120,7 @@
 
 - `1vh` 等于`window.innerHeight` 的数值的 1%
 
-  <img src='../imgs/vm.jpg' />
+  <img src='./imgs/vm.jpg' />
 
 - 元素的宽度为：`209/375 = 55.73% = 55.73vw`
 
@@ -243,9 +243,9 @@ Google Web Fundamentals -- Web Responsive Images](https://developers.google.com/
 
   > flexbox 是一维布局，他只能在一条直线上放置你的内容区块；而 grid 是一个二维布局。它除了可以灵活的控制水平方向之外，还能轻易的控制垂直方向的布局模式。对于上图那样的九宫格布局，它就可以轻而易举的完成。
 
-  <img src='../imgs/flex.jpg'>
+  <img src='./imgs/flex.jpg'>
 
-  <img src='../imgs/grid.jpg'>
+  <img src='./imgs/grid.jpg'>
 
 [新时代 CSS 布局](https://www.chenhuijing.com/slides/53-cssconfcn-2019/#/)
 
