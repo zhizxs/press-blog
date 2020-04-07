@@ -1,2 +1,5 @@
-# press-blog
-blog by vue-press
+---
+home: true
+
+footer: 知之 | © 2020
+---

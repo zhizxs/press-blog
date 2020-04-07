@@ -248,7 +248,7 @@ window.onload = function() {
 
 - input 与 textarea 的区别?
 
-  - <input>是单行文本框，不会换行。通过 size 属性指定显示字符的长度，注意：当使用 css 限定了宽高，那么 size 属性就不再起作用。
+  - `<input>`是单行文本框，不会换行。通过 size 属性指定显示字符的长度，注意：当使用 css 限定了宽高，那么 size 属性就不再起作用。
         value 属性指定初始值，Maxlength 属性指定文本框可以输入的最长长度。可以通过 width 和 height 设置宽高，但是也不会增加行数。
 
-  - <textarea>  是多行文本输入框，文本区中可容纳无限数量的文本，无 value 属性，其中的文本的默认字体是等宽字体（通常是 Courier） ，可以通   过 cols 和 rows 属性来规定 textarea 的尺寸，不过更好的办法是使用 CSS 的 height 和 width 属性。内容使用 innerHTML 。
+  - `<textarea>`  是多行文本输入框，文本区中可容纳无限数量的文本，无 value 属性，其中的文本的默认字体是等宽字体（通常是 Courier） ，可以通   过 cols 和 rows 属性来规定 textarea 的尺寸，不过更好的办法是使用 CSS 的 height 和 width 属性。内容使用 innerHTML 。

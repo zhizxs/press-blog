@@ -6,12 +6,12 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        "@img": "public/img"
+       
       }
     }
   },
   themeConfig: {
-    // logo: "./assets/img/logo.jpg",
+    logo: "../public/img/logo-v.png",
     // sidebar: "auto",
     sidebarDepth: 2,
     nav: [

@@ -6,5 +6,5 @@ export default ({
   siteData,
   isServer 
 }) => {
-	B
+	
 }
