@@ -1,10 +1,29 @@
-# 浏览器相关的知识点
+---
+title: 浏览器相关的知识点
+date: 2020-04-18
+categories:
+  - FrontEnd
+tags:
+  - 浏览器
+  - 事件
+  - 性能监测
+
+isShowComments: true
+---
+
+:::tip
+
+1. 事件代理
+2. 性能监测
+   :::
+
+<!-- more -->
 
 ## 事件代理机制
 
 > 在说浏览器事件代理机制原理之前，我们首先了解一下事件流的概念，早期浏览器，IE 采用的是事件捕获事件流，而 Netscape 采用的则是事件捕获。"DOM2 级事件"把事件流分为三个阶段，捕获阶段、目标阶段、冒泡阶段。现代浏览器也都遵循此规范。
 
-![浏览器的事件机制](../imgs/event.png)
+![浏览器的事件机制](./imgs/event.png)
 
 **那么事件代理是什么呢？**
 
@@ -43,8 +62,6 @@ document.addEventListener("click", function(e) {
 并且不同的事件处理程序的 passive 的默认是不一样的。
 在移动端的 touchmove 事件中 passive 值默认为 true，如果要在移动端中阻止滚动的话，要手动将 passive 设置为 false。
 
-
-
 ## dev-tool 性能监测
 
 > 性能监测是前端性能优化的重要一环。监测方案：可视化方案、可编程方案。
@@ -79,10 +96,10 @@ Lighthouse 是一个开源的自动化工具，用于改进网络应用的质量
 访问 performance 对象：performance 是一个全局对象。我们在控制台里输入 window.performance
 
 - 关键时间点：在 performance 的 timing 属性中，我们可以查看到如下的时间戳
-  ![关键事件戳](../imgs/dev_time.png)
+  ![关键事件戳](./imgs/dev_time.png)
 
 - 这些时间戳与页面整个加载流程中的关键时间节点有着一一对应的关系：
-  ![加载流程](../imgs/dev_data.png)
+  ![加载流程](./imgs/dev_data.png)
 
 **关键性能指标：firstbyte、fpt、tti、ready 和 load 时间**
 

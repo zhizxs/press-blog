@@ -1,5 +1,18 @@
-# js基础
+---
+title: js基础
+date: 2020-04-18
+categories:
+  - FrontEnd
 
+tags:
+	- javascript
+
+isShowComments: true
+---
+
+TODO
+
+<!-- more -->
 ## this 的指向
 1. 普通函数调用
 	- 函数被直接调用，上下文一定是window
@@ -8,7 +21,7 @@
 2. 箭头函数
 	 它本身没有this，会沿着作用域向上寻找，直到global / window。
 3. bind绑定上下文返回的新函数
-	
+
 	就是被第一个bind绑定的上下文，而且bind对“箭头函数”无效。多次bind，上下文由第一个bind的上下文决定。
 
 4. call,apply this指向第一个参数，也就是被借用的函数
@@ -26,7 +39,7 @@
 	ECMAScript 中定义了 7 种原始类型：
 
 	Boolean、String、Number、Null、Undefined、Symbol（新定义）、BigInt（新定义）
-	
+
 	**注意：原始类型不包含Object和Function**
 
 - 类型判断
@@ -41,20 +54,20 @@
 		* [1,2,3] instanceof Object // true 注意！！
 
    	+ 数组判断 ES6
-   		* Array.isArray() 
+   		* Array.isArray()
    		* Array.isArray({}) // false
 
 - 类型转换
-	
-	> 非原始类型的数据进行数学运算操作时，需要将转换为原始类型	
-	
+
+	> 非原始类型的数据进行数学运算操作时，需要将转换为原始类型
+
 	转换如下：
 
 	1. 调用其 valueOf 方法，返回结果是原始类型，则返回，否则继续；
 	2. 调用其 toString 方法，返回结果是原始类型，则返回，否则继续；
 	3. 都没有返回原始类型，则报错
 	4. es6还提供了Symbol.toPrimitive供对象向原始类型转化，并且它的优先级最高
-			
+
 	```
 	let b = {
 	  valueOf: function() {
@@ -73,7 +86,7 @@
 
 ## 对象的深拷贝和浅拷贝
 
-**提醒** 
+**提醒**
 - 在JS中，函数和对象都是浅拷贝（地址引用）；其他的，例如布尔值、数字等基础数据类型都是深拷贝（值引用）。
 - ES6的Object.assign()和ES7的...解构运算符都是“浅拷贝”。
 
@@ -109,7 +122,7 @@
 		</script>
 		```
 	```
-	
+
 	```
 
 ## js事件流
@@ -162,7 +175,7 @@ console.log(sum2); // 106
 
 
 ## ES5 继承
-1. 绑定构造函数 
+1. 绑定构造函数
   **不能继承父类原型的方法/属性 **
 ```
   	function Animal(){
@@ -217,7 +230,7 @@ console.log(sum2); // 106
 
 3. 组合继承
 	* 结合绑定构造函数和原型链继承2种方式，缺点是：调用了2次父类的构造函数
-		
+
 	```
 		function Animal(species){
 			this.species = species
@@ -231,12 +244,12 @@ console.log(sum2); // 106
 		Cat.prototype = new Animal()
 		Cat.prototype.constructor = Cat
 		var cat = new Cat('Cat')
-		cat.fun() // Animal 
+		cat.fun() // Animal
 		console.log(cat.species) // Cat
 	```
 
 4. 寄生组合继承
-	**改进了组合继承的缺点，只需要调用1次父类的构造函数。它是引用类型最理想的继承范式 ** 
+	**改进了组合继承的缺点，只需要调用1次父类的构造函数。它是引用类型最理想的继承范式 **
 	```
 	/**
 	 * 寄生组合继承的核心代码
@@ -245,7 +258,7 @@ console.log(sum2); // 106
 	 */
 	function inheritPrototype(sub, parent) {
 	  // 拿到父类的原型
-	  var prototype = Object.create(parent.prototype) 
+	  var prototype = Object.create(parent.prototype)
 	  // 改变constructor指向
 	  prototype.constructor = sub
 	  // 父类原型赋给子类
@@ -350,7 +363,7 @@ f.alertName()
 	** JS是单线程的，先跑执行栈里的同步任务，然后再跑任务队列的异步任务。**
 
 - 执行栈和任务队列
-	
+
 	简单总结如下：
 
 	1. JS是单线程的，其上面的所有任务都是在两个地方执行：执行栈和任务队列。前者是存放同步任务；后者是异步任务有结果后，就在其中放入一个事件。
@@ -433,15 +446,15 @@ f.alertName()
 * Map -> Map类似对象，但是它的键（key）可以是任意数据类型
 
 	使用方法：Map接口基本和Set一致。不同的是增加新元素的API是：set(key, value)
-		   
+
 		   ```
 		   	const map = new Map();
-	
+
 			// 以任意对象为 Key 值
 			// 这里以 Date 对象为例
-			let key = new Date(); 
+			let key = new Date();
 			map.set(key, "today");
-	
+
 			console.log(map.get(key));
 		   ```
 
@@ -548,7 +561,7 @@ a.next(); // Object{value:NaN, done:true}
 			test() // 执行测试函数
 	```
 
-	**注：虽然方便，但是它也不能取代Promise，尤其是我们可以很方便地用Promise.all()来实现并发，而async/await只能实现串行** 
+	**注：虽然方便，但是它也不能取代Promise，尤其是我们可以很方便地用Promise.all()来实现并发，而async/await只能实现串行**
 
 	```
 		function sleep(second) {
@@ -573,11 +586,11 @@ a.next(); // Object{value:NaN, done:true}
 		  for (let i = 0; i < 3; ++i) {
 		    tasks.push(sleep(1000));
 		  }
-	
+
 		  await Promise.all(tasks);
 		}
 	```
-	
+
 	运行bingXingDemo()，几乎同时输出，它是并发执行；运行chuanXingDemo()，每个输出间隔1s，它是串行执行。
 
 
@@ -595,30 +608,30 @@ a.next(); // Object{value:NaN, done:true}
 		```
 			console.log(ES5Class()) // es5:可以直接作为函数运行
 			// console.log(new ES6Class()) // 会报错：不存在变量提升
-	
+
 			function ES5Class(){
 			  console.log("hello")
 			}
-	
+
 			ES5Class.prototype.func = function(){ console.log("Hello world") }
-	
+
 			class ES6Class{
 			  constructor(){}
 			  func(){
 			    console.log("Hello world")
 			  }
 			}
-	
+
 			let es5 = new ES5Class()
 			let es6 = new ES6Class()
-	
+
 			// 推荐在循环对象属性的时候，使用for...in
 			// 在遍历数组的时候的时候，使用for...of
 			console.log("ES5 :")
 			for(let _ in es5){
 			  console.log(_)
 			}
-	
+
 			// es6:不可枚举
 			console.log("ES6 :")
 			for(let _ in es6){
@@ -633,7 +646,7 @@ a.next(); // Object{value:NaN, done:true}
 
 ## EsModule和CommonJS的比较
 
-目前js社区有4种模块管理规范：AMD、CMD、CommonJS和EsModule。 
+目前js社区有4种模块管理规范：AMD、CMD、CommonJS和EsModule。
 
 ES Module 是原生实现的模块化方案，与 CommonJS 有以下几个区别：
 
@@ -674,12 +687,12 @@ ES Module 是原生实现的模块化方案，与 CommonJS 有以下几个区别
    }
    console.log(typeof Point) //"function"
    Point === Point.prototype.constructor // true
-   
+
    // Point 是个函数
    // 类本身指向构造函数。因为构造函数的原型的构造属性也指向函数本身。
    ```
 
-   
+
 
 2. 使用时，可以通过new命令，与传统函数相同。
 

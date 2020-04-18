@@ -1,5 +1,21 @@
+---
+title: npm
+date: 2020-04-18
+categories:
+  - tools
 
-## 多npm镜像切换
+tags:
+  - npm
+  - tools
+
+isShowComments: true
+---
+
+**TODO**
+
+<!-- more -->
+
+## 多 npm 镜像切换
 
 - 临时使用
 
@@ -13,14 +29,13 @@ npm --registry https://registry.npm.taobao.org install express
 npm config set registry https://registry.npm.taobao.org
 ```
 
-
 - 安装版本管理工具
 
 `npm install -g nrm`
 
-- 切换 
+- 切换
 
-`nrm ls `
+`nrm ls`
 
 - 使用
 
@@ -31,7 +46,7 @@ Registry has been set to: http://registry.npm.taobao.org/
 
 - 增加源
 
-```nrm add <源名称> <源地址>```
+`nrm add <源名称> <源地址>`
 
 - 删除源
 
@@ -44,7 +59,3 @@ nrm del
 ```
 nrm test
 ```
-
-
-
-

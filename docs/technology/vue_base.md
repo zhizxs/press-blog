@@ -1,4 +1,19 @@
-# vue 基础知识点
+---
+title: vue 基础知识点
+date: 2020-04-18
+categories:
+  - FrontEnd
+
+tags:
+  - vue
+  - frame
+
+isShowComments: true
+---
+
+**TODO**
+
+<!-- more -->
 
 ### 组件间传值
 
@@ -49,11 +64,11 @@
 
   // 触发
   EventBus.$emit("addition", {
-    num: this.num++
+    num: this.num++,
   })
 
   // 接收
-  EventBus.$on("addition", param => {
+  EventBus.$on("addition", (param) => {
     this.count = this.count + param.num
   })
 
@@ -244,7 +259,7 @@
 修改状态：提交 mutation 修改状态 - 必须
 actions 中提交 mutation 再去修改状态值 - 官方建议
 使用 dispatch 来提交 actions
-![vuex](../imgs/vuex.png)
+![vuex](./imgs/vuex.png)
 
 学习地址：https://baijiahao.baidu.com/s?id=1618794879569468435&wfr=spider&for=pc
 
@@ -344,7 +359,7 @@ diff 算法的过程中,先会进行新旧节点的首尾交叉对比,当无法�
       "unshift",
       "splice",
       "sort",
-      "reverse"
+      "reverse",
     ].forEach(function(method) {})
 
     // 当在对数组进行这些操作时,ob.dep.notify(),通知相应的改变
@@ -371,4 +386,4 @@ diff 算法的过程中,先会进行新旧节点的首尾交叉对比,当无法�
 
 当改变属性值时,会触发对应的属性的 set 方法,由于之前执行 render 的时候触发了 get,收集了对应的 Watcher,所以改变值时触发 set,通知之前收集的 Watcher 实例执行,重新计算 render 方法进行 patch 操作
 
-<img src='../imgs/vue.jpg'>
+<img src='./imgs/vue.jpg'>

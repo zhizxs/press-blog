@@ -1,36 +1,23 @@
-\---
-
-title: JS事件循环
-
+---
+title: 事件循环 Event-loop
 date: 2020-04-18
-
 categories:
-
-  \- FrontEnd
+  - FrontEnd
 
 tags:
-
- 	- javascript
-
-​		- 
-
-prev:JS的事件循环
+  - javascript
+  - 事件
 
 isShowComments: false
-
-\---
+---
 
 :::tip
 
-​	1.js的事件机制是什么样子的？
+1. 什么是 JS 的事件机制？
+2. 为什么？
+   :::
 
-​	2.为什么会是这样呢？
-
-:::
-
-
-
-## (浏览器)事件循环 Event-loop
+## 事件循环 Event-loop
 
 **区别 node 的事件循环**
 
@@ -59,9 +46,9 @@ isShowComments: false
 
 > **需要注意的是:当前执行栈执行完毕时会立刻先处理所有微任务队列中的事件, 然后再去宏任务队列中取出一个事件。同一次事件循环中, 微任务永远在宏任务之前执行。**
 
-![任务执行](/Users/chenxq/workspace/gitio/press-blog/articles/Base/imgs/task.jpeg)
+![任务执行](./imgs/task.jpeg)
 
-### 案列分析
+## 案列分析(面试)
 
 - 先看一个示例
 
@@ -152,7 +139,7 @@ inner-setTimeout---0
 7. 接着遇到 setTimeout 0，它的作用是在 0ms 后将回调函数放到宏任务队列中，检查微任务队列，即 microtask 队列，发现此队列不为空，执行 promise 的 then 回调，输出'promise5'。
 8. 此时 microtask 队列为空，进入下一个事件循环，检查宏任务队列，发现有 setTimeout 的回调函数，立即执行回调函数输出，输出'inner-setTimeout---0'。代码执行结束.
 
-### 为什么需要事件循环？
+## 为什么需要事件循环？
 
 因为 JavaScript 是单线程的。单线程就意味着，所有任务需要排队，前一个任务结束，才会执行后一个任务。如果前一个任务耗时很长，后一个任务就不得不一直等着。为了协调事件（event），用户交互（user interaction），脚本（script），渲染（rendering），网络（networking）等，用户代理（user agent）必须使用事件循环（event loops）
 

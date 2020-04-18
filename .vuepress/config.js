@@ -1,6 +1,6 @@
 module.exports = {
   title: "江湖夜雨",
-  description: "只有出发，才能到达！",
+  description: "只有出发，才会到达！",
   head: [
     ["link", { rel: "icon", href: "/favicon.ico" }],
     [
@@ -54,13 +54,12 @@ module.exports = {
       avatar: "wavatar",
       notify: true,
     },
-
     // 密钥
-    keyPage: {
-      keys: ["d5c186983b52c4551ee00f72316c6eaa"],
-      color: "#42b983", // 登录页动画球的颜色
-      lineColor: "#42b983", // 登录页动画线的颜色
-    },
+    // keyPage: {
+    //   keys: ["d5c186983b52c4551ee00f72316c6eaa"],
+    //   color: "#42b983", // 登录页动画球的颜色
+    //   lineColor: "#42b983", // 登录页动画线的颜色
+    // },
     //  备案
     record: "皖ICP备19024044号",
     recordLink:
