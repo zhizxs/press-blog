@@ -1,6 +1,6 @@
 ---
 title: js-Tips
-date: 2020-04-18
+date: 2017-07-18
 categories:
   - FrontEnd
 tags:
@@ -70,4 +70,48 @@ proxyTable: {
 
 在index.js中的proxyTable中拦截了/api,并把/api及其前面的所有替换成了target中的内容，因此实际访问Url是api.douban.com/v2/movie。
 */
+```
+
+### IE 下对文件进行操作
+
+```js
+// 该方法只能用于 IE 浏览器
+
+// 获取文件夹下的文件名称 返回字符串
+function getFloderFiles(path) {
+  var fileObj = new ActiveXObject("Scripting.FileSystemObject") //文件操作对象
+  var files = new Array()
+  var f = fileObj.GetFolder(path)
+  var s = ""
+  var ff = new Enumerator(f.Files) //该目录下所有的文件集合
+  for (; !ff.atEnd(); ff.moveNext()) {
+    files[files.length] = ff.item() //把该目录下的所有文件路径都放在一个数组里.
+    s += ff.item()
+    s += ","
+  }
+  return s
+}
+// 删除文件夹下的文件
+function deleteFiles(path) {
+  console.log("执行删除！")
+  var fileObj = new ActiveXObject("Scripting.FileSystemObject") //文件操作对象
+  var files = new Array()
+  var f = fileObj.GetFolder(path)
+  var ff = new Enumerator(f.Files) //该目录下所有的文件集合
+  for (; !ff.atEnd(); ff.moveNext()) {
+    fileObj.DeleteFile(ff.item())
+  }
+}
+// 新建文件夹
+function createFloder(path) {
+  console.log("执行文件夹新建！")
+  var fileObj = new ActiveXObject("Scripting.FileSystemObject") //文件操作对象
+  fileObj.CreateFolder(path)
+}
+// 判断文件夹有没有
+function hasFloder(path) {
+  var fileObj = new ActiveXObject("Scripting.FileSystemObject") //文件操作对象
+  var has = !!fileObj.FolderExists(path)
+  return has
+}
 ```

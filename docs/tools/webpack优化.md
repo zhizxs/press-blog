@@ -12,7 +12,7 @@ tags:
 isShowComments: true
 ---
 
-:::tips
+:::tip
 
 webpack 开发过程中自身的优化以及在前端优化过程中能干的事情
 

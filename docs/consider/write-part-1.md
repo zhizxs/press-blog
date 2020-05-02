@@ -4,7 +4,7 @@ date: 2020-04-19
 categories:
   - others
 tags:
-  - 事件管理
+  - 时间管理
   - 精力管理
   - others
 

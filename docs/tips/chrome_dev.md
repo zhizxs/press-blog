@@ -10,7 +10,7 @@ tags:
 isShowComments: true
 ---
 
-:::tips
+:::tip
 
 1. 基本面板的介绍
 2. filesystem 文件系统的使用以及项目中的使用建议

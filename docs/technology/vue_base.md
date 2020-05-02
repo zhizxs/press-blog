@@ -78,11 +78,72 @@ isShowComments: true
 
 - Vuex
 
-- localStorage,sessionStorage
+  - 安装 `npm install vuex`
+  - 创建文件夹 vuex
+  - 创建文件 `store.js` //存放所有状态
+
+  ```js
+  // ~store.js
+  import Vue from "vue"
+  import Vuex from "vuex"
+  import mutations from "./mutations"
+  Vue.use(Vuex)
+  const state = {
+    httpUrl: "",
+  }
+  export default new Vuex.Store({
+    state,
+    mutations,
+  })
+  ```
+
+  - 创建文件 `mutations.js` //用于更改所有状态
+
+  ```js
+  //~mutations.js
+  export default {
+    SET_HTTPURL(state, data) {
+      state.httpUrl = data
+      console.log("设置url地址", data)
+    },
+  }
+  ```
+
+  - mian.js 全局引入 store
+
+  ```js
+  import store from './vuex/store.js'
+  new Vue({
+    store,
+    ...
+    })
+  ```
+
+  - 组件中使用
+
+  引入`import { mapMutations } from 'vuex'` //用于更改状态,只是获取时候不需要
+
+  ```js
+  methods:{
+    ...mapMutations({
+      setUrl: "SET_HTTPURL"
+    }),
+    set(){
+      this.setUrl('url')
+    }
+  },
+  computed:{
+    getUrl(){
+      return this.$store.state.httpUrl
+    }
+  }
+  ```
+
+* localStorage,sessionStorage
 
   > 注意用`JSON.parse()` / `JSON.stringify()` 做数据格式转换 `localStorage` / `sessionStorage`可以结合`vuex`, 实现数据的持久保存,同时使用 vuex 解决数据和状态混乱问题.
 
-- \$attrs/\$listeners
+* \$attrs/\$listeners
 
   结合 inheritAttrs: false, // 可以关闭自动挂载到组件根元素上的没有在 props 声明的属性
 
@@ -110,6 +171,37 @@ isShowComments: true
 > 兄弟组件通信: `eventBus` ; vuex
 >
 > 跨级通信: `eventBus`；Vuex；`provide` / `inject` 、`$attrs` / `$listeners`
+
+### axios
+
+- 安装 `npm install axios`
+- 引用 `main.js`
+
+  ```js
+  import axios from "axios"
+  Vue.prototype.$http = axios
+  ```
+
+- 使用
+  **一般都会进行封装**
+
+  ```js
+
+  this.$http.get(url[,{params obj}]).then(function(res){}).catch(function(err){})
+
+  this.$http.post(url[,{params obj},{config}]).then(function(res){}).catch(function(err){})
+
+  ```
+
+- 服务器(apache)端配置：
+  ```js
+  header("Access-Control-Allow-Origin: *")
+  header(
+    "Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+  )
+  ```
+  更多 axios 配置项,很神奇~
+  **注:**axios 发送 post 请求时会现发送一个 options 请求，根据返回发送 post 请求。
 
 ### 生命周期
 

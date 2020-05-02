@@ -14,13 +14,13 @@ isShowComments: true
 
 ### <a href="../source-code/数组一些操作.md">数组一些操作</a>
 
+### <a href="../source-code/对象.md">对象</a>
+
 ### <a href="../source-code/防抖和节流.md">防抖和节流</a>
 
 ### <a href="../source-code/自定义事件类.md">自定义事件类</a>
 
 ### <a href="../source-code/自执行器.md">自执行器</a>
-
-### <a href="../source-code/call-apply-bind.md">call/apply/bind</a>
 
 ### <a href="../source-code/promise的实现.md">promise 的实现</a>
 

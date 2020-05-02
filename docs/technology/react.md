@@ -6,11 +6,12 @@ categories:
 
 tags:
   - react
+  - frame
 
 isShowComments: true
 ---
 
-:::tips
+:::tip
 初识 react ,然后就结束了...
 :::
 

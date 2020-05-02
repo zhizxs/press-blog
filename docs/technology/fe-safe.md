@@ -10,7 +10,7 @@ isShowComments: false
 publish: false
 ---
 
-:::tips
+:::tip
 
 - XSS
 - SCRF

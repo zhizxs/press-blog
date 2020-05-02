@@ -1,6 +1,6 @@
 ---
 title: nginx
-date: 2020-04-18
+date: 2020-02-18
 categories:
   - tools
 
