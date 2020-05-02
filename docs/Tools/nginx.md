@@ -176,7 +176,6 @@ cd /usr/local/nginx-1.17.0/
 ### nginx.conf
 
 ```
-
 #user chenxq;
 worker_processes 1;
 
@@ -191,8 +190,8 @@ worker_connections 1024;
 }
 
 http {
-include mime.types;
-default_type application/octet-stream;
+    include mime.types;
+    default_type application/octet-stream;
 
     #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
     #                  '$status $body_bytes_sent "$http_referer" '
@@ -277,9 +276,9 @@ default_type application/octet-stream;
 
     		add_header Access-Control-Allow-Origin *;
 
-add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS';
-}
-}
+          add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS';
+      }
+    }
 
     # another virtual host using mix of IP-, name-, and port-based configuration
     #
@@ -317,9 +316,5 @@ add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS';
     #}
 
 }
-
-```
-
-```
 
 ```

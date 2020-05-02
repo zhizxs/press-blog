@@ -1,8 +1,8 @@
 ---
-title: webpack+vue/cli
+title: webpack-tips
 date: 2020-04-18
 categories:
-  - FrontEnd
+  - tools
 tags:
   - javascript
   - tips
@@ -12,7 +12,7 @@ isShowComments: true
 ---
 
 :::tip
-webpack 插件
+vue/cli3 中使用插件或者是 webpack 的钩子
 :::
 
 <!-- more -->
