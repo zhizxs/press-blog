@@ -115,3 +115,85 @@ function hasFloder(path) {
   return has
 }
 ```
+
+### 文件上传进度
+
+```js
+// 关于文件上传获取进度
+
+// 原生h5
+var fileObj = document.getElementById("f").files[0]
+//创建xhr
+var xhr = new XMLHttpRequest()
+var url = "upFile.ashx"
+//FormData对象
+var fd = new FormData()
+fd.append("path", "D:\\") //上传路径
+fd.append("file", fileObj)
+fd.append("acttime", new Date().toString()) //本人喜欢在参数中添加时间戳，防止缓存（--、）
+xhr.open("POST", url, true)
+xhr.send(fd)
+xhr.onreadystatechange = function() {
+  if (xhr.readyState == 4 && xhr.status == 200) {
+    var result = xhr.responseText
+    document.getElementById("result").innerHTML = result
+  }
+}
+//进度条部分
+xhr.upload.onprogress = function(evt) {
+  if (evt.lengthComputable) {
+    var percentComplete = Math.round((evt.loaded * 100) / evt.total)
+    document.getElementById("progress").value = percentComplete
+    document.getElementById("progressNumber").style.width =
+      percentComplete + "%"
+  }
+}
+
+// jquery
+
+$.ajax({
+  url: url,
+  type: "POST",
+  xhr: xhrOnProgress(function(e) {
+    var percent = e.loaded / e.total //计算百分比
+  }),
+})
+
+// vue - axios
+
+var config = {
+  onUploadProgress: (progressEvent) => {
+    var complete =
+      (((progressEvent.loaded / progressEvent.total) * 100) | 0) + "%"
+    this.progress = complete
+  },
+}
+axios.post(`api/uploadFile`, form, config).then((res) => {
+  if (res.data.status === "success") {
+    console.log("上传成功")
+  }
+})
+
+// 微信小程序
+
+const uploadTask = wx.uploadFile({
+  url: "http://example.weixin.qq.com/upload", //仅为示例，非真实的接口地址
+  filePath: tempFilePaths[0],
+  name: "file",
+  formData: {
+    user: "test",
+  },
+  success: function(res) {
+    var data = res.data
+    //do something
+  },
+})
+
+uploadTask.onProgressUpdate((res) => {
+  console.log("上传进度", res.progress)
+  console.log("已经上传的数据长度", res.totalBytesSent)
+  console.log("预期需要上传的数据总长度", res.totalBytesExpectedToSend)
+})
+
+uploadTask.abort() // 取消上传任务
+```
