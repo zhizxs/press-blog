@@ -38,3 +38,7 @@ tags:
 ### viscode
 
 ### sublime
+
+## d流水线
+
+- gitlab(代码管理) + sonarQube（代码质量检测） + jenkins（自动化构建） 
