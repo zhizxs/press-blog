@@ -11,7 +11,8 @@
 # keys:
 #   - "d5c186983b52c4551ee00f72316c6eaa"
 
-# prev: 这是个预览
+# prev: 上一篇
+# next: 下一篇
 # isShowComments: true
 # publish: false
 ---
