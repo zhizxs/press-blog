@@ -85,25 +85,31 @@ test3
 git rm <finame>
 git mv file_from file_to
 
-已修改，未暂存
-#如果我们只是在编辑器里修改了文件，但还没有执行 git add .，这时候我们的文件还在工作区，并没有进入暂存区，我们可以用
+```
+
+## 回滚操作
+
+```bash
+# 已修改，未暂存
+# 如果我们只是在编辑器里修改了文件，但还没有执行 git add .，这时候我们的文件还在工作区，并没有进入暂存区，我们可以用
 git checkout -- test.txt  #git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以 “一键还原”。
 git reset HEAD file    #把暂存区的修改撤销掉（unstage），重新放回工作区
 
-已暂存，未提交
+#已暂存，未提交
 #你已经执行了 git add .，但还没有执行 git commit -m "comment"。这时候你意识到了错误，想要撤销，你可以执行：
 git reset
 git checkout .
 
-已提交，未推送
+# 已提交，未推送
 #你的手太快，你既执行了 git add .，又执行了 git commit，这时候你的代码已经进入了你的本地仓库，然而你后悔了，怎么办？不要着急，还有办法。
 git reset --hard origin/master
 #还是这个 git reset --hard 命令，只不过这次多了一个参数 origin/master，正如我们上面讲过的，origin/master 代表远程仓库，既然你已经污染了你的本地仓库，那么就从远程仓库把代码取回来吧。
 
-已推送
+# 已推送
 #很不幸，你的手实在是太快了，你既 git add 了，又 git commit 了，并且还 git push 了，这时你的代码已经进入远程仓库。如果你想恢复的话，还好，由于你的本地仓库和远程仓库是等价的，你只需要先恢复本地仓库，再强制 push 到远程仓库就好了：
 git reset --hard HEAD^
 git push -f
+
 ```
 
 ## 分支管理
@@ -236,12 +242,18 @@ git pull <远程主机名> <远程分支名>:<本地分支名> #取回远程主�
 git pull origin next:master #取回 origin 主机的 next 分支，与本地的 master 分支合并
 ```
 
+本地没有分支，需要拉取线上分支到本地
+
+```bash
+git checkout -b <本地分支名> origin/<远程分支名>
+```
+
 **pull 文件时和本地文件冲突**
 
 `git stash`先将本地修改存储起来
 这样本地的所有修改就都被暂时存储起来 。是用`git stash list`可以看到保存的信息：
 
-```
+```bash
 stash@{0}: WIP on master: xxxxxxx <commit>
 ```
 
@@ -250,7 +262,7 @@ stash@{0}: WIP on master: xxxxxxx <commit>
 还原暂存的内容`git stash pop stash@{0}`
 提示如下信息
 
-```
+```basg
 Auto-merging c/environ.c
 CONFLICT (content): Merge conflict in c/environ.c
 ```
@@ -259,7 +271,7 @@ CONFLICT (content): Merge conflict in c/environ.c
 
 也可以放弃本地修改，直接覆盖之
 
-```
+```bash
 git reset --hard
 git pull
 ```
