@@ -39,6 +39,6 @@ tags:
 
 ### sublime
 
-## d流水线
+## 流水线
 
-- gitlab(代码管理) + sonarQube（代码质量检测） + jenkins（自动化构建） 
+- gitlab(代码管理) + sonarQube（代码质量检测） + jenkins（自动化构建）
