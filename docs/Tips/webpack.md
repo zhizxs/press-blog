@@ -101,3 +101,82 @@ configureWebpack: (config) => {
   }
 }
 ```
+
+- 生产环境删除console
+
+试过很多插件，最后有效的还是 `babel-plugin-transform-remove-console`。
+
+这个需要配置 `babel.config.js`文件。
+
+
+```js
+
+const plugins = [
+  // .....
+];
+
+// 生产环境移除console
+if (process.env.NODE_ENV === "prod") {
+  plugins.push("transform-remove-console");
+}
+
+module.exports = {
+  presets: ["@vue/app"],
+  plugins: plugins
+};
+```
+
+
+- 生产环境打包增加版本号
+最初想添加的，最后想到jekins发布的时候，需要拉代码到服务上，打包修改文件，但是没有人提交的话，会导致下次拉代码的时候出现冲突。建议参照自己的发布方式使用。此处修改版本号的方式也是简单粗暴。
+
+```javascript
+
+// package.json
+{
+  // ...
+  "version": "1.0.2",
+  // ...
+}
+
+// vue.config.js
+const path = require("path");
+const fs = require("fs");
+let version = "";
+
+// ...
+
+// 声明函数
+const setPackageJsonVersion = () => {
+  const pkgPath = path.join(__dirname, "./package.json");
+  let pkg = fs.readFileSync(pkgPath);
+  pkg = JSON.parse(pkg);
+  let arr = pkg.version.split(".");
+  arr[2] = parseInt(arr[2] || 0) + 1;
+  version = arr.join(".");
+  pkg.version = version;
+  fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
+};
+
+
+// 使用
+ chainWebpack: config => {
+  // ...
+  if (process.env.NODE_ENV === "prod") {
+      config.plugin("define").tap(args => {
+        setPackageJsonVersion();
+        args[0]["process.env.VERSION"] = version;
+        console.log("当前打包版本：", version);
+        return args;
+      });
+    }
+  // ...
+
+ }
+
+
+```
+
+
+
+
