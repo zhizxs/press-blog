@@ -102,6 +102,7 @@ configureWebpack: (config) => {
 }
 ```
 
+
 - 生产环境删除console
 
 试过很多插件，最后有效的还是 `babel-plugin-transform-remove-console`。
@@ -176,10 +177,4 @@ const setPackageJsonVersion = () => {
 
 
 ```
-
-
-test git revert comid
-
-
-
 
